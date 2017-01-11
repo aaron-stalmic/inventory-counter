@@ -16,7 +16,7 @@ import os
 from datetime import *
 
 
-class count:
+class Count:
     """
     An inventory count generated from a CSV. Data should be listed with items
     along the leftmost column and dates of counts along the top. Class is a
