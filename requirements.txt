@@ -1,0 +1,7 @@
+This project requires the following packages:
+
+csv
+os
+datetime
+
+Use `pip install <package>` to install a package if it is not installed on your system.
