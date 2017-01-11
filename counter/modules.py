@@ -55,7 +55,7 @@ class count:
         try:
             date = datetime.strptime(date, self.D_FORMAT)
         except ValueError:
-            print("Date is not in a valid format (MM/DD/YYYY")
+            print("Date is not in a valid format (MM/DD/YYYY)")
         try:
             return self.count[item][(date - self.start).days]
         except KeyError:
