@@ -48,3 +48,18 @@ class WarehouseInvoices:
                 except IndexError:
                     print("Something's wrong.", end=" ")
                     print("Perhaps you did not generate the invoice file correctly?")
+
+    def query(self, location, date):
+        """
+        Queries a location for invoices on a specific date and returns all
+        items sold on that date.
+        """
+        if location not in self.invoices.keys():
+            print("There are no invoices for that location.")
+        else:
+            try:
+                datetime.strptime(date, D_FORMAT)
+            except ValueError:
+                print("Date is not in a valid format (MM/DD/YYYY).")
+            else:
+                return [x for x in self.invoices[location] if x[0] == date]
