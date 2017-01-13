@@ -11,6 +11,8 @@ from builtins import input
 import csv
 from datetime import *
 
+D_FORMAT = '%m/%d/%Y'
+
 
 class Count:
     """
@@ -18,13 +20,12 @@ class Count:
     along the leftmost column and dates of counts along the top. Class is a
     dictionary with the item name returning an array of counts.
     """
-    D_FORMAT = '%m/%d/%Y'
 
     def __init__(self, filename):
         self.count = {}
         with open(filename, newline='', encoding='utf-8-sig') as file:
             reader = list(csv.reader(file))
-            self.start = datetime.strptime(reader[0][1], self.D_FORMAT)
+            self.start = datetime.strptime(reader[0][1], D_FORMAT)
             self.length = 0
             for i, row in enumerate(reader[1:]):
                 if len(row) > self.length:
@@ -49,9 +50,9 @@ class Count:
         Query the count by item and date.
         """
         try:
-            date = datetime.strptime(date, self.D_FORMAT)
+            date = datetime.strptime(date, D_FORMAT)
         except ValueError:
-            print("Date is not in a valid format (MM/DD/YYYY)")
+            print("Date is not in a valid format (MM/DD/YYYY).")
         try:
             return self.count[item][(date - self.start).days]
         except KeyError:
@@ -84,7 +85,7 @@ class Count:
             # maximum number of inventory items supported is 9,999,999,999. :^)
             file.write(',            ')
             for i in range(0, self.length):
-                date = (self.start + timedelta(i)).strftime(self.D_FORMAT)
+                date = (self.start + timedelta(i)).strftime(D_FORMAT)
                 file.write(', %s' % date)
             for item in sorted(self.count.keys()):
                 file.write('\n="%s"' % item)

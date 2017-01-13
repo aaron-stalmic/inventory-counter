@@ -61,5 +61,5 @@ def get_csvs(folder):
     csvs = []
     for file in os.listdir(folder):
         if file.lower().endswith('.csv') and not file.startswith('.'):
-            csv.append(file)
+            csvs.append(file)
     return csvs
