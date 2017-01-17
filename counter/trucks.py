@@ -75,7 +75,7 @@ class TruckInvoices:
         if route not in self.invoices_r.keys():
             print("There are no invoices for the specified route.")
         else:
-            try: 
+            try:
                 datetime.strptime(date, D_FORMAT)
             except ValueError:
                 print("Date is not in a valid format (MM/DD/YYYY).")

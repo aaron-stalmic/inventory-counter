@@ -11,7 +11,19 @@
 from __future__ import print_function
 from builtins import input
 
-from count import Count
+import os
+
+from count import *
+from invio import *
+from trucks import *
+from warehouses import *
 
 
-
+master_count = {}
+for file in prompt_csvs('counts'):
+    master_count[os.path.basename(file)[:-4]] = Count(file)
+for file in prompt_csvs('truck invoices'):
+    trk_invoices = TruckInvoices(file)
+trk_loads = TruckLoads(prompt_csvs('truck loads'))
+wh_invoices = WarehouseInvoices(prompt_csvs('warehouse invoices'))
+wh_purchases = WarehousePurchases(prompt_csvs('warehouse purchases'))
