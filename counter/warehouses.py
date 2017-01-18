@@ -12,6 +12,8 @@ from datetime import *
 import os
 # The date format.
 from count import D_FORMAT
+# The prefixes on invoices for those that come from the warehouse, and not from
+# a truck.
 WH_PREFIXES = ['BH', 'MR', 'VN', 'KB']
 
 
@@ -25,8 +27,9 @@ class WarehouseInvoices:
         # store any warehouse invoices. To generate the invoices, we use sales
         # by item detail, with only the columns item, number, date, and
         # quantity, which is then exported to excel and saved as a CSV.
-        # 
         self.invoices = {}
+        # Warehouse invoices are in separate CSV files, named after their
+        # location.
         for filename in filelist:
             name = os.path.basename(filename)[:-4]
             self.invoices[name] = []
@@ -34,6 +37,8 @@ class WarehouseInvoices:
                 reader = list(csv.reader(file))
             for i, inv in enumerate(reader):
                 try:
+                    # Remove blank lines (begin with 3 blank cells) and any
+                    # invoices that are not sourced from the warehouse.
                     if (len(inv) > 3 and
                        inv[0:3] == ['']*3 and
                        inv[5][0:2] in WH_PREFIXES):

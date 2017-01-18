@@ -28,14 +28,15 @@ class TruckInvoices:
         self.invoices_t = {}
         with open(filename, newline='', encoding='utf-8-sig') as file:
             reader = list(csv.reader(file))
-            # The default list from bMobile has several instances of repetition
-            # and 0 values that are not required in the final list. This
-            # algorithm picks out the first unique value ONLY in a sequence.
-            # This data is taken from the bMobile Route Balance Variance
-            # Report, and the relevant data is in columns 21, 18, 20, 27, & 30
-            # (Date, Route, Truck, Item, and Amt Sold)
-            # An extra item is added to the beginning of reader to help with
-            # iteration.
+        # The default list from bMobile has several instances of repetition
+        # and 0 values that are not required in the final list. This
+        # algorithm picks out the first unique value ONLY in a sequence.
+        # This data is taken from the bMobile Route Balance Variance
+        # Report, and the relevant data is in columns 21, 18, 20, 27, & 30
+        # (Date, Route, Truck, Item, and Amt Sold)
+        #
+        # An extra item is added to the beginning of reader to help with
+        # iteration.
         reader = [[0]*40] + reader
         for i, inv in enumerate(reader[1:]):
             try:

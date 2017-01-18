@@ -23,6 +23,7 @@ def prompt_csvs(type):
         if os.path.isdir(folder) is False:
             print("I cannot find '%s'. Try again." % folder)
 
+    # Ask the user if the found CSVs are correct.
     while True:
         filelist = get_csvs(folder)
         print("\n I found %i items in %s:" % (len(filelist), folder))

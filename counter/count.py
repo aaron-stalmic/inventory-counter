@@ -23,13 +23,19 @@ class Count:
 
     def __init__(self, filename):
         self.count = {}
+        # Excel automatically outputs CSV files with a byte order mark at the
+        # beginning of the file, so we need to import with the utf-8-sig
+        # encoding.
         with open(filename, newline='', encoding='utf-8-sig') as file:
             reader = list(csv.reader(file))
+            # The start date will be the first date listed in the count.
             self.start = datetime.strptime(reader[0][1], D_FORMAT)
             self.length = 0
             for i, row in enumerate(reader[1:]):
+                # Find the length of the longest row, not including the item.
                 if len(row) > self.length:
                     self.length = len(row) - 1
+                # Convert item quantities to floats for manipulating.
                 for j, item in enumerate(row[1:]):
                     try:
                         if item:
