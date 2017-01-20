@@ -15,17 +15,16 @@ def prompt_csvs(type):
     """
     Promps the user for the location of CSV files of a specific type.
     """
-    prompt = "Please enter the location of CSVs for %s: " % type
-    folder = ''
-
-    while os.path.isdir(folder) is False:
-        folder = input(prompt)
-        if os.path.isdir(folder) is False:
-            print("I cannot find '%s'. Try again." % folder)
-
-    # Ask the user if the found CSVs are correct.
     while True:
+        prompt = "Please enter the location of CSVs for %s: " % type
+        folder = ''
+
+        while os.path.isdir(folder) is False:
+            folder = input(prompt)
+            if os.path.isdir(folder) is False:
+                print("I cannot find '%s'. Try again." % folder)
         filelist = get_csvs(folder)
+        # Ask the user if the found CSVs are correct.
         print("\n I found %i items in %s:" % (len(filelist), folder))
         for item in filelist:
             print(item)

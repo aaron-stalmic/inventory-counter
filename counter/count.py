@@ -66,6 +66,20 @@ class Count:
         except IndexError:
             print("Date is not in count.")
 
+    def start_date(self, item):
+        """
+        Returns the start date for an item, and none if an item has not been
+        counted.
+        """
+        try:
+            i = next((i for i, x in enumerate(self.count[item]) if x), None)
+        except KeyError:
+            print("Item does not exist in count.")
+        if i is None:
+            return None
+        else:
+            return (self.start + timedelta(i)).strftime(D_FORMAT)
+
     def edit(self, item, index, amt):
         """
         Edit an item.
