@@ -66,7 +66,7 @@ class Count:
         except IndexError:
             print("Date is not in count.")
 
-    def start_date(self, item):
+    def start_date(self, item, format=True):
         """
         Returns the start date for an item, and none if an item has not been
         counted.
@@ -78,12 +78,20 @@ class Count:
         if i is None:
             return None
         else:
-            return (self.start + timedelta(i)).strftime(D_FORMAT)
+            if format:
+                return (self.start + timedelta(i)).strftime(D_FORMAT)
+            else:
+                return self.start + timedelta(i)
 
-    def edit(self, item, index, amt):
+    def edit(self, item, date, amt):
         """
         Edit an item.
         """
+        if type(date) != datetime.datetime:
+            try:
+                date = datetime.strptime(date, D_FORMAT)
+        try:
+            index = (date - self.start).days
         try:
             self.count[item][index] += amt
         except KeyError:

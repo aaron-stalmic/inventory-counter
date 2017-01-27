@@ -71,3 +71,21 @@ transfers = Transfers(prompt_csvs('transfers')[0], wh_names)
 trk_loads = TruckLoads(prompt_csvs('truck loads'))
 wh_invoices = WarehouseInvoices(prompt_csvs('warehouse invoices'))
 wh_purchases = WarehousePurchases(prompt_csvs('warehouse purchases'))
+
+
+def subtract_wh_invoices(counts, invoices):
+    """
+    Takes WH invoice data and subtracts those invoices from their respective WH
+    counts.
+    """
+    for loc in invoices:
+        for i in invoices[loc]:
+            i_date = datetime.strptime(i[0], D_FORMAT)
+            try:
+                s_date = counts[loc].start_date(i[2], False)
+            except KeyError:
+                print("%s not found. Skipping." % i[2])
+            else:
+                if s_date != None and i_date > s_date:
+                    counts[loc].edit(i[2], i_date, (0 - i[3]))
+    return counts
