@@ -89,3 +89,17 @@ def subtract_wh_invoices(counts, invoices):
                 if s_date != None and i_date > s_date:
                     counts[loc].edit(i[2], i_date, (0 - i[3]))
     return counts
+
+
+def add_wh_purchases(counts, purchases):
+    for loc in purchases:
+        for p in purchases[loc]:
+            p_date = datetime.strptime(p[0], D_FORMAT)
+            try:
+                s_date = counts[loc].start_date(p[1], False)
+            except KeyError:
+                print("%s not found. Skipping." % p[1])
+            else:
+                if s_date != None and p_date > s_date:
+                    counts[loc].edit(p[1], p_date, p[2])
+    return counts
